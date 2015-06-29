@@ -40,6 +40,7 @@
             this.foodDropBox.Size = new System.Drawing.Size(182, 21);
             this.foodDropBox.TabIndex = 0;
             this.foodDropBox.SelectedIndexChanged += new System.EventHandler(this.foodDropBox_SelectedIndexChanged);
+            this.foodDropBox.Click += new System.EventHandler(this.foodDropBox_Click);
             // 
             // foodLabel
             // 
