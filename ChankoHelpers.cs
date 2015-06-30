@@ -9,7 +9,7 @@ namespace ChankoPlugin
     {
         private static bool IsFoodItem(this BagSlot slot)
         {
-            return (slot.Item.EquipmentCatagory == ItemUiCategory.Meal);
+            return (slot.Item.EquipmentCatagory == ItemUiCategory.Meal || slot.Item.EquipmentCatagory == ItemUiCategory.Ingredient);
         }
 
         public static IEnumerable<BagSlot> GetFoodItems(this IEnumerable<BagSlot> bags)

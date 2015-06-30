@@ -148,6 +148,7 @@ namespace ChankoPlugin
 
     public class Settings : JsonSettings
     {
+        [JsonIgnore]
         private static Settings _instance;
 
         public static Settings Instance

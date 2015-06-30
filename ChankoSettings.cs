@@ -20,7 +20,10 @@ namespace ChankoPlugin
 
             UpdateFood();
 
-            foodDropBox.SelectedValue = Settings.Instance.Id;
+            if (InventoryManager.FilledSlots.GetFoodItems().Select(t => t.TrueItemId).Contains(Settings.Instance.Id))
+            {
+                foodDropBox.SelectedValue = Settings.Instance.Id;
+            }
         }
 
         private void foodDropBox_SelectedIndexChanged(object sender, EventArgs e)
