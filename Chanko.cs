@@ -41,7 +41,7 @@ namespace ChankoPlugin
 
         private static async Task<bool> EatFood()
         {
-            if (Settings.Instance.FoodName == null || Settings.Instance.FoodName.Length == 0)
+            if (Settings.Instance.Id == 0 || !InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id))
             {
                 Logging.Write(Colors.Aquamarine, "[Chanko] No food selected, check your settings");
                 return false;
@@ -121,7 +121,7 @@ namespace ChankoPlugin
         private void AddHooks()
         {
             Logging.Write("Adding Chanko Hook");
-            TreeHooks.Instance.InsertHook("TreeStart", 0, _coroutine);
+            TreeHooks.Instance.AddHook("TreeStart", _coroutine);
         }
 
         private void RemoveHooks()

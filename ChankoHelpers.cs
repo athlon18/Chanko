@@ -24,5 +24,10 @@ namespace ChankoPlugin
                 .Select(s => s.TrueItemId)
                 .Contains(id);
         }
+
+        public static uint GetFoodCount(uint id)
+        {
+            return InventoryManager.FilledSlots.GetFoodItems().First(t => t.TrueItemId == id).Count;
+        }
     }
 }
