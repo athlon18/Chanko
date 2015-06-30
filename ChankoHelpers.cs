@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ff14bot.Enums;
+﻿using ff14bot.Enums;
 using ff14bot.Managers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChankoPlugin
 {
@@ -18,16 +18,16 @@ namespace ChankoPlugin
                 .Where(s => s.IsFoodItem());
         }
 
-        public static bool ContainsFooditem(this  IEnumerable<BagSlot> bags, uint id)
+        public static bool ContainsFooditem(this IEnumerable<BagSlot> bags, uint id)
         {
             return bags
                 .Select(s => s.TrueItemId)
                 .Contains(id);
         }
 
-        public static uint GetFoodCount(uint id)
+        public static BagSlot GetFoodItem(this IEnumerable<BagSlot> bags, uint id)
         {
-            return InventoryManager.FilledSlots.GetFoodItems().First(t => t.TrueItemId == id).Count;
+            return bags.First(s => s.TrueItemId == id);
         }
     }
 }

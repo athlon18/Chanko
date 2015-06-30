@@ -1,20 +1,16 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Buddy.Coroutines;
+﻿using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.AClasses;
 using ff14bot.Behavior;
-using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using Newtonsoft.Json;
-using TreeSharp;
-using System.Windows.Forms;
+﻿using System;
+using System.Configuration;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Media;
+using TreeSharp;
 
 namespace ChankoPlugin
 {
@@ -47,7 +43,7 @@ namespace ChankoPlugin
                 return false;
             }
 
-            var item = InventoryManager.FilledSlots.GetFoodItems().First(s => s.TrueItemId == Settings.Instance.Id);
+            var item = InventoryManager.FilledSlots.GetFoodItem(Settings.Instance.Id);
 
             if (item == null) return false;
 
@@ -148,7 +144,6 @@ namespace ChankoPlugin
 
     public class Settings : JsonSettings
     {
-        [JsonIgnore]
         private static Settings _instance;
 
         public static Settings Instance
@@ -160,9 +155,6 @@ namespace ChankoPlugin
             : base(Path.Combine(CharacterSettingsDirectory, "Chanko.json"))
         {
         }
-
-        [Setting]
-        public string FoodName { get; set; }
 
         [Setting]
         public uint Id { get; set; }

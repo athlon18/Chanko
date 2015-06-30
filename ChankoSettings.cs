@@ -1,11 +1,8 @@
-﻿using System;
+﻿using ff14bot.Managers;
+using System;
 using System.Linq;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using ff14bot.Managers;
-using ff14bot.Helpers;
-
 
 namespace ChankoPlugin
 {
@@ -20,7 +17,7 @@ namespace ChankoPlugin
 
             UpdateFood();
 
-            if (InventoryManager.FilledSlots.GetFoodItems().Select(t => t.TrueItemId).Contains(Settings.Instance.Id))
+            if (InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id))
             {
                 foodDropBox.SelectedValue = Settings.Instance.Id;
             }
@@ -28,7 +25,6 @@ namespace ChankoPlugin
 
         private void foodDropBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Instance.FoodName = foodDict[(uint)foodDropBox.SelectedValue];
             Settings.Instance.Id = (uint)foodDropBox.SelectedValue;
             Settings.Instance.Save();
         }
