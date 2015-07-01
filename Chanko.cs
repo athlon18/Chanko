@@ -32,7 +32,7 @@ namespace ChankoPlugin
         
         public override Version Version
         {
-            get { return new Version(1, 0, 0, 0); }
+            get { return new Version(1, 0, 0, 1); }
         }
 
         private static async Task<bool> EatFood()
@@ -92,8 +92,8 @@ namespace ChankoPlugin
 
         public override void OnDisabled()
         {
-            TreeRoot.OnStart += OnBotStart;
-            TreeRoot.OnStop += OnBotStop;
+            TreeRoot.OnStart -= OnBotStart;
+            TreeRoot.OnStop -= OnBotStop;
             RemoveHooks();
             
         }
