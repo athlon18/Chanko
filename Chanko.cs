@@ -144,7 +144,7 @@ namespace ChankoPlugin
 
         private void OnHooksCleared(object sender, EventArgs e)
         {
-            AddHooks();
+            RemoveHooks();
         }
     }
 
