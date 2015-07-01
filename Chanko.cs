@@ -32,7 +32,7 @@ namespace ChankoPlugin
         
         public override Version Version
         {
-            get { return new Version(0, 0, 1, 0); }
+            get { return new Version(1, 0, 0, 0); }
         }
 
         private static async Task<bool> EatFood()
@@ -40,6 +40,12 @@ namespace ChankoPlugin
             if (Settings.Instance.Id == 0 || !InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id))
             {
                 Logging.Write(Colors.Aquamarine, "[Chanko] No food selected, check your settings");
+                return false;
+            }
+
+            if (GatheringManager.WindowOpen)
+            {
+                Logging.Write(Colors.Aquamarine, "[Chanko] Waiting for gathering window to close");
                 return false;
             }
 
@@ -116,13 +122,13 @@ namespace ChankoPlugin
 
         private void AddHooks()
         {
-            Logging.Write("Adding Chanko Hook");
+            Logging.Write(Colors.Aquamarine, "Adding Chanko Hook");
             TreeHooks.Instance.AddHook("TreeStart", _coroutine);
         }
 
         private void RemoveHooks()
         {
-            Logging.Write("Removing Chanko Hook");
+            Logging.Write(Colors.Aquamarine, "Removing Chanko Hook");
             TreeHooks.Instance.RemoveHook("TreeStart", _coroutine);
         }
 
