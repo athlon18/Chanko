@@ -5,7 +5,7 @@ using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using Newtonsoft.Json;
-﻿using System;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
@@ -18,21 +18,22 @@ namespace ChankoPlugin
     {
         private Composite _coroutine;
         private ChankoSettings _settingsForm;
-        private static int _buff = 48;   
+        private static uint _buff = 48;   
 
         public override string Author
         {
-            get { return "evo89"; }
+            get { return "evo89 fix by athlon"; }
         }
 
-        public override string Name
-        {
-            get { return "Chanko"; }
-        }
-        
+#if RB_CN
+        public override string Name => "你今天吃食物没";
+#else
+        public override string Name => "Chanko";
+#endif
+
         public override Version Version
         {
-            get { return new Version(1, 0, 0, 1); }
+            get { return new Version(1, 1, 0); }
         }
 
         private static async Task<bool> EatFood()
@@ -56,26 +57,26 @@ namespace ChankoPlugin
             if (FishingManager.State != FishingState.None)
             {
                 Logging.Write(Colors.Aquamarine, "[Chanko] Stop fishing");
-                Actionmanager.DoAction("Quit", Core.Me);
+                ActionManager.DoAction("Quit", Core.Me);
                 await Coroutine.Wait(5000, () => FishingManager.State == FishingState.None);
             }
 
-            if (Core.Me.IsMounted)
-            {
-                Logging.Write(Colors.Aquamarine, "[Chanko] Dismounting to eat");
-                await CommonTasks.StopAndDismount();
-            }
+            //if (Core.Me.IsMounted)
+            //{
+            //    Logging.Write(Colors.Aquamarine, "[Chanko] Dismounting to eat");
+            //    await CommonTasks.StopAndDismount();
+            //}
 
             Logging.Write(Colors.Aquamarine, "[Chanko] Eating " + item.EnglishName);
             item.UseItem();
-            await Coroutine.Wait(5000, () => Core.Me.HasAura(_buff));
+            await Coroutine.Wait(5000, () => Core.Player.HasAura(_buff));
 
             return true;
         }
 
         public override void OnInitialize()
         {
-            _coroutine = new Decorator(c => !Core.Me.HasAura(_buff), new ActionRunCoroutine(r => EatFood()));
+            _coroutine = new Decorator(c => !Core.Player.HasAura(_buff), new ActionRunCoroutine(r => EatFood()));
         }
 
         public override void OnEnabled()
